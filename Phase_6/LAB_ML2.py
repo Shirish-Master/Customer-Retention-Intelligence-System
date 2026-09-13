@@ -1,5 +1,7 @@
 # 246. Split X and y: train_test_split(test_size=0.2, stratify=y, random_state=42)
 
+import json
+from datetime import datetime
 from pathlib import Path
 
 import joblib
@@ -108,3 +110,58 @@ print(
 joblib.dump(models["Logistic Regression"], MODELS_DIR / "logistic_churn.pkl")
 joblib.dump(models["Decision Tree"], MODELS_DIR / "tree_churn.pkl")
 print(f"Saved models to {MODELS_DIR}")
+
+
+# LAB_CL1 - Phase 7 fix
+#
+# Task 7:
+# Apply the fix by hand: have train.py persist the feature column list to
+# models/feature_columns.json, and have predict.py read that file instead of
+# hardcoding values
+#
+# Everything written below is measured from the training data at fit time.
+# Nothing here is a literal chosen by hand - that was the defect. predict.py
+# reads this file rather than carrying its own copy of these values.
+
+FEATURE_COLUMNS_FILE = MODELS_DIR / "feature_columns.json"
+
+CATEGORICAL_PREFIXES = ["contract_type", "internet_service"]
+
+
+def one_hot_mode(frame: pd.DataFrame, prefix: str) -> str:
+    """Recover the most common source category from its one-hot columns.
+
+    prepare_ml_data() one-hot encodes before returning X, so the original
+    categorical column is gone. The most frequent category is the one whose
+    dummy column has the largest column sum.
+    """
+    columns = [column for column in frame.columns if column.startswith(f"{prefix}_")]
+    if not columns:
+        raise ValueError(f"No one-hot columns found for prefix {prefix!r}")
+    return frame[columns].sum().idxmax()[len(prefix) + 1 :]
+
+
+feature_metadata = {
+    "model_file": "tree_churn.pkl",
+    "trained_at": datetime.now().isoformat(timespec="seconds"),
+    "n_training_rows": int(len(X)),
+    # The exact column list, in the exact order, the model was fitted on.
+    "feature_columns": list(X.columns),
+    "categorical_prefixes": CATEGORICAL_PREFIXES,
+    # Fallbacks for callers who genuinely cannot supply a value. Derived from
+    # the training distribution, not invented.
+    "training_defaults": {
+        "monthly_charges_median": float(X["monthly_charges"].median()),
+        "internet_service": one_hot_mode(X, "internet_service"),
+        "auto_pay_flag": int(X["auto_pay_flag"].mode().iloc[0]),
+        "has_streaming_bundle": int(X["has_streaming_bundle"].mode().iloc[0]),
+    },
+}
+
+FEATURE_COLUMNS_FILE.write_text(
+    json.dumps(feature_metadata, indent=2),
+    encoding="utf-8",
+)
+print(f"Saved feature contract to {FEATURE_COLUMNS_FILE}")
+print(f"  {len(feature_metadata['feature_columns'])} feature columns")
+print(f"  training defaults: {feature_metadata['training_defaults']}")

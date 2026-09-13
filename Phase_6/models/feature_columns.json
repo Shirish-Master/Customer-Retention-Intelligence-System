@@ -1,0 +1,31 @@
+{
+  "model_file": "tree_churn.pkl",
+  "trained_at": "2026-09-13T23:26:01",
+  "n_training_rows": 7043,
+  "feature_columns": [
+    "tenure",
+    "monthly_charges",
+    "total_charges",
+    "service_count",
+    "high_charge_flag",
+    "is_long_term_customer",
+    "auto_pay_flag",
+    "has_streaming_bundle",
+    "contract_type_Month-to-month",
+    "contract_type_One year",
+    "contract_type_Two year",
+    "internet_service_DSL",
+    "internet_service_Fiber optic",
+    "internet_service_No"
+  ],
+  "categorical_prefixes": [
+    "contract_type",
+    "internet_service"
+  ],
+  "training_defaults": {
+    "monthly_charges_median": 70.35,
+    "internet_service": "Fiber optic",
+    "auto_pay_flag": 0,
+    "has_streaming_bundle": 0
+  }
+}

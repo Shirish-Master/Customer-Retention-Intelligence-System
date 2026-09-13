@@ -1,0 +1,63 @@
+{
+  "label": "after",
+  "personas": [
+    {
+      "persona": "P1 loyal / two-year / no internet",
+      "internet_service": "No",
+      "auto_pay_flag": 1,
+      "api_risk_score": 0.0162,
+      "api_prediction": "Unlikely to churn",
+      "direct_risk_score": 0.0162,
+      "direct_prediction": "Unlikely to churn",
+      "api_matches_direct": true
+    },
+    {
+      "persona": "P2 mid-tenure / month-to-month / DSL",
+      "internet_service": "DSL",
+      "auto_pay_flag": 1,
+      "api_risk_score": 0.2895,
+      "api_prediction": "Unlikely to churn",
+      "direct_risk_score": 0.2895,
+      "direct_prediction": "Unlikely to churn",
+      "api_matches_direct": true
+    },
+    {
+      "persona": "P3 new / month-to-month / fiber (genuine high risk)",
+      "internet_service": "Fiber optic",
+      "auto_pay_flag": 0,
+      "api_risk_score": 0.7214,
+      "api_prediction": "Likely to churn",
+      "direct_risk_score": 0.7214,
+      "direct_prediction": "Likely to churn",
+      "api_matches_direct": true
+    },
+    {
+      "persona": "P4 long tenure / one year / DSL / autopay",
+      "internet_service": "DSL",
+      "auto_pay_flag": 1,
+      "api_risk_score": 0.0943,
+      "api_prediction": "Unlikely to churn",
+      "direct_risk_score": 0.0943,
+      "direct_prediction": "Unlikely to churn",
+      "api_matches_direct": true
+    },
+    {
+      "persona": "P5 new / month-to-month / no internet",
+      "internet_service": "No",
+      "auto_pay_flag": 0,
+      "api_risk_score": 0.0769,
+      "api_prediction": "Unlikely to churn",
+      "direct_risk_score": 0.0769,
+      "direct_prediction": "Unlikely to churn",
+      "api_matches_direct": true
+    }
+  ],
+  "batch": {
+    "rows_scored": 7043,
+    "mean_risk_score": 0.264654,
+    "median_risk_score": 0.175,
+    "likely_to_churn": 1921,
+    "unlikely_to_churn": 5122,
+    "likely_rate": 0.272753
+  }
+}

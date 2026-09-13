@@ -425,6 +425,15 @@ class ChurnPredictionRequest(BaseModel):
     contract_type: str
     service_count: int
 
+    # LAB_CL1 - Phase 7 fix. These four were never accepted by the request
+    # model, so predict.py had nothing to work from and substituted its own
+    # values for every single call. Optional so existing four-field callers
+    # keep working; when supplied they are used instead of a training default.
+    internet_service: Optional[str] = None
+    auto_pay_flag: Optional[int] = None
+    has_streaming_bundle: Optional[int] = None
+    total_charges: Optional[float] = None
+
 
 # 120. Add POST /predict-churn to main.py
 
@@ -446,6 +455,15 @@ def predict_churn(request: ChurnPredictionRequest):
             monthly_charges=request.monthly_charges,
             contract_type=request.contract_type,
             service_count=request.service_count,
+            # LAB_CL1 - Phase 7 fix. Forward the real customer attributes.
+            # Previously these were never passed, so predict.py filled in
+            # "Fiber optic" / 0 / 0 for every customer regardless of who they
+            # were. None here means the caller genuinely did not supply the
+            # value, and predict.py falls back to a recorded training default.
+            internet_service=request.internet_service,
+            auto_pay_flag=request.auto_pay_flag,
+            has_streaming_bundle=request.has_streaming_bundle,
+            total_charges=request.total_charges,
         )
     except ValueError as error:
         raise HTTPException(status_code=422, detail=str(error)) from error
@@ -490,6 +508,16 @@ class ChurnPredictionRequest(BaseModel):
     monthly_charges: float = Field(..., gt=0)
     contract_type: str
     service_count: int
+
+    # LAB_CL1 - Phase 7 fix, mirrored from the LAB_API5 definition above.
+    # Note this second definition shadows the first at module level, but the
+    # /predict-churn route was decorated before this line runs, so the route
+    # still binds to the earlier class. Both carry the fields so the fix holds
+    # whichever one a caller reaches for.
+    internet_service: Optional[str] = None
+    auto_pay_flag: Optional[int] = None
+    has_streaming_bundle: Optional[int] = None
+    total_charges: Optional[float] = None
 
 
 # 126. Add a consistent error response model: ErrorResponse(detail: str, status_code: int)
