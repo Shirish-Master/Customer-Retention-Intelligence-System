@@ -1,0 +1,85 @@
+[
+  {
+    "check_name": "null_rate_monthly_charges",
+    "status": "PASS",
+    "value_found": 0.0,
+    "threshold": 0,
+    "severity": "CRITICAL"
+  },
+  {
+    "check_name": "null_rate_tenure",
+    "status": "PASS",
+    "value_found": 0.0,
+    "threshold": 0,
+    "severity": "CRITICAL"
+  },
+  {
+    "check_name": "value_range_tenure",
+    "status": "PASS",
+    "value_found": {
+      "minimum": 0.0,
+      "maximum": 72.0,
+      "invalid_count": 0
+    },
+    "threshold": {
+      "minimum": 0,
+      "minimum_inclusive": true,
+      "maximum_inclusive": 100
+    },
+    "severity": "CRITICAL"
+  },
+  {
+    "check_name": "value_range_monthly_charges",
+    "status": "PASS",
+    "value_found": {
+      "minimum": 18.25,
+      "maximum": 118.75,
+      "invalid_count": 0
+    },
+    "threshold": {
+      "minimum": 0,
+      "minimum_inclusive": false,
+      "maximum_inclusive": null
+    },
+    "severity": "CRITICAL"
+  },
+  {
+    "check_name": "allowed_values_contract",
+    "status": "PASS",
+    "value_found": [
+      "Month-to-month",
+      "One year",
+      "Two year"
+    ],
+    "threshold": [
+      "Month-to-month",
+      "One year",
+      "Two year"
+    ],
+    "severity": "CRITICAL"
+  },
+  {
+    "check_name": "row_count",
+    "status": "PASS",
+    "value_found": 7043,
+    "threshold": 7000,
+    "severity": "CRITICAL"
+  },
+  {
+    "check_name": "no_duplicates_customer_id",
+    "status": "PASS",
+    "value_found": 0,
+    "threshold": 0,
+    "severity": "CRITICAL"
+  },
+  {
+    "check_name": "churn_distribution",
+    "status": "PASS",
+    "value_found": {
+      "0": 5174,
+      "1": 1869
+    },
+    "threshold": "both churn values 0 and 1 must be present",
+    "severity": "WARNING"
+  }
+]
