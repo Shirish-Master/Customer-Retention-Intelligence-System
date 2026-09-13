@@ -1,0 +1,6 @@
+persona,internet_service,auto_pay_flag,api_risk_score,api_prediction,direct_risk_score,direct_prediction,api_matches_direct
+P1 loyal / two-year / no internet,No,1,0.0162,Unlikely to churn,0.0162,Unlikely to churn,True
+P2 mid-tenure / month-to-month / DSL,DSL,1,0.505,Likely to churn,0.2895,Unlikely to churn,False
+P3 new / month-to-month / fiber (genuine high risk),Fiber optic,0,0.7214,Likely to churn,0.7214,Likely to churn,True
+P4 long tenure / one year / DSL / autopay,DSL,1,0.0943,Unlikely to churn,0.0943,Unlikely to churn,True
+P5 new / month-to-month / no internet,No,0,1.0,Likely to churn,0.0769,Unlikely to churn,False
