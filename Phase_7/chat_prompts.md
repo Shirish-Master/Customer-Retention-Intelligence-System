@@ -114,3 +114,125 @@ these three are open-ended and judgement-based, and the value is in reading the
 reply and reacting to it. The audit in Task 4 is the opposite — it needs the
 same rigid shape every time so it can be asserted against in CI, which is what
 `tool_choice` buys and what the chat UI cannot give.
+
+---
+---
+
+# Part 2 — memory, templates and the security checklist
+
+Three more `[Claude.ai]` tasks. Same rule: draft in chat, commit the artefact.
+
+---
+
+## Task 1 (part 2)
+
+> Draft the contents of your project's "memory" — the facts Claude should
+> always know: your data quirks, your ML rules, your table names. Keep it under
+> 200 lines  [Claude.ai]
+
+Drafting this in chat is worth the round trip because the useful question is
+"what did you get wrong when I *didn't* tell you this?" Prompt used:
+
+```
+I have a telco churn project: MySQL, FastAPI, a scikit-learn decision tree,
+and a React dashboard. I want to write a "project memory" — a block of facts
+prepended to the system prompt of every API call I make about this codebase.
+
+Ask me up to ten questions about the project whose answers you could not
+guess correctly from general knowledge of telco churn datasets. Do not write
+the memory yet. I want the questions first.
+```
+
+Asking for the *questions* first is the trick. It surfaces exactly the facts
+that are load-bearing — the ones where a plausible assumption is wrong. Three
+came out of this that made it into the file: that `stg_customer_raw` keeps
+CamelCase while everything else is snake_case, that `internet_service = "No"`
+means no product rather than a missing value, and the `high_charge_flag`
+AVG-versus-median inconsistency.
+
+Then, with the answers pasted back:
+
+```
+Now write the memory block. Under 200 lines. Group it into named sections.
+Facts only — no advice, no "consider doing X". Anything you would only know
+by reading my code, not by knowing the domain.
+```
+
+**Artefact:** `project_context.py`.
+
+---
+
+## Task 4 (part 2)
+
+> Draft three reusable prompt templates: one to profile your dataset, one to
+> scaffold a new API endpoint, and one to review code changes for security
+> issues  [Claude.ai]
+
+Drafted one at a time. The pattern that worked was writing a bad first version
+deliberately, running it, and asking what went wrong:
+
+```
+Here is a prompt template I use to scaffold new FastAPI endpoints, and here is
+the output it produced. The output ignored my service-layer convention and put
+the SQL directly in the route.
+
+Rewrite the template so that cannot happen. Do not make it longer than it
+needs to be — tell me which single instruction was missing.
+```
+
+That produced the numbered convention list in `scaffold_endpoint.v1.md`. The
+answer was that "follow the conventions in main.py" is not an instruction, it
+is a hope — the conventions had to be enumerated.
+
+For the profiling template the lesson was the opposite: the first draft asked
+for too much and got confident nonsense, so `profile_dataset.v1.md` ends with
+an explicit instruction to name the missing aggregate rather than guess.
+
+**Artefacts:** `prompts/profile_dataset.v1.md`,
+`prompts/scaffold_endpoint.v1.md`, `prompts/security_review.v1.md`.
+
+---
+
+## Task 8 (part 2)
+
+> Ask Claude.ai to red-team your checklist — "what am I missing, given this
+> handles real customer data?"  [Claude.ai]
+
+Paste `claude_guardrails.py` in and ask:
+
+```
+Here is the entire security layer for a system that sends code and database
+aggregates to the Claude API. The underlying data is 7043 real telco customer
+records: identifiers, tenure, billing amounts, payment method, per-service
+subscription flags.
+
+Red-team this. What am I missing, given this handles real customer data?
+
+Be specific about what an attacker or a careless colleague actually does to
+get past each control. Rank by what you would fix first. Do not restate what
+the code already does correctly.
+```
+
+The "what does someone actually do to get past it" phrasing matters — without
+it you get a checklist of generic best practices rather than the specific holes
+in this code.
+
+**Known gaps to expect it to find** — recording them here so the reply can be
+judged rather than just accepted:
+
+- `assert_no_secrets` compares against `.env` values by exact substring. A
+  secret that is base64'd, URL-encoded, reversed, or split across two arguments
+  goes straight through.
+- `MIN_SECRET_LENGTH = 8` means a short secret is never scanned at all.
+- The guard checks what is *sent*, not what comes *back*. Nothing scans the
+  response before it is printed to a terminal or written to a file.
+- `project_fields` restricts columns but nothing restricts *row count* — a
+  caller can pass 7043 projected rows and still export the whole customer base.
+- Prompts are not logged, so there is no record of what customer data was sent
+  to a third party. That is a GDPR problem, not a security one, and it is
+  invisible from inside the code.
+- `dotenv_values` is re-read on every scan; an attacker who can write `.env`
+  can shrink it to empty and disable the guard.
+
+**Record here:** what the red-team found that is *not* in the list above. That
+delta is the actual deliverable for this task.

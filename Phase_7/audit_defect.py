@@ -27,6 +27,12 @@ from pathlib import Path
 import anthropic
 from dotenv import load_dotenv
 
+# Phase 7 Task 2: the project memory is prepended to the system prompt of every
+# script that calls Claude. call_claude() applies it plus the shared caps and
+# the secret scan; nothing here calls messages.create() directly.
+from claude_guardrails import call_claude
+from project_context import SYSTEM_PROMPT  # noqa: F401  (documents the import)
+
 PROJECT_DIR = Path(__file__).resolve().parents[1]
 OUTPUT_DIR = Path(__file__).resolve().parent
 
@@ -220,13 +226,14 @@ def run_audit() -> dict:
     client = anthropic.Anthropic()
 
     try:
-        response = client.messages.create(
-            model=MODEL,
-            max_tokens=16000,
+        response = call_claude(
+            client,
+            messages=[{"role": "user", "content": build_prompt()}],
             tools=[AUDIT_TOOL],
             # 4c. tool_choice forces the tool - the model cannot answer in prose.
             tool_choice={"type": "tool", "name": "report_audit_findings"},
-            messages=[{"role": "user", "content": build_prompt()}],
+            max_tokens=16000,
+            model=MODEL,
         )
     except anthropic.AuthenticationError as error:
         raise SystemExit(

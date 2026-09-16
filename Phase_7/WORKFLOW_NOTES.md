@@ -164,6 +164,56 @@ draft 3 of the prompt — which is what `audit_defect.py` now hardcodes.
 
 ---
 
+## Part 2 — memory, templates, guardrails
+
+| File | Task |
+|---|---|
+| `project_context.py` | The project memory, 11 named fact blocks, prepended to every system prompt |
+| `claude_guardrails.py` | All four security checklist items; the only place that calls the Messages API |
+| `prompt_loader.py` | `load_template(name, **kwargs)` — versioned, validated, secret-scanned |
+| `prompts/*.v1.md` | The three templates |
+| `security_review.py` | Human-only module; four independent checks before it will run |
+| `memory_test.py` | Fact present → removed → restored |
+| `secret_leak_check.py` | Six real leak attempts against a live `.env` value |
+
+### Note — drafting prompts in chat versus running them via the API
+
+Drafting a prompt and *operating* one turned out to be different jobs, and the
+split was sharper here than in the defect hunt.
+
+**Chat is where a prompt gets its content.** Every instruction that ended up
+mattering came from watching a draft fail. The endpoint template is the clearest
+case: the first version said "follow the conventions in Phase_3/main.py" and got
+back SQL inlined into the route. Asking chat *which single instruction was
+missing* produced the answer that "follow the conventions" is not an instruction
+— the seven conventions had to be enumerated. No amount of reasoning about the
+template in the abstract would have produced that; it needed a bad output in
+front of both of us. Same with the memory: asking Claude to *ask me questions it
+couldn't guess the answers to* surfaced the CamelCase quirk and the AVG-vs-median
+inconsistency, neither of which I would have thought to write down.
+
+**The API is where a prompt gets its guarantees.** Everything that makes these
+templates safe to run repeatedly is code, not wording: that arguments are
+validated before they become prompt text, that a `.env` value cannot reach the
+request by any of six paths, that history is trimmed to ten turns and tokens
+capped in one place, that only six named fields of a customer row are ever
+forwarded. None of that is expressible in a chat window — in chat, *I* am the
+guardrail, and I am not a reliable one at 6pm.
+
+The thing that surprised me: **the memory is only worth having because it is
+testable.** In chat, context accumulates invisibly and you cannot tell whether
+an answer is grounded in what you said or in what the model already knew.
+`memory_test.py` removes one fact and measures the answer getting worse, which
+is the only way to know the block is doing work rather than decorating the
+request. A memory you cannot degrade on purpose is a memory you cannot trust.
+
+The corollary is that `security_review.py` deliberately refuses to be automated
+even though it runs through the same API layer. Automating it would produce a
+list of exploitable weaknesses in build logs on every push, and a green check
+mark that nobody reads. Some things should stay hard to run.
+
+---
+
 ## Running everything
 
 ```bash
@@ -175,4 +225,9 @@ python Phase_7/audit_defect.py               # the real audit (needs a live key 
 python Phase_7/record_risk_scores.py after   # personas + batch aggregate
 python Phase_6/batch_score.py                # full job, writes customer_risk_table
 python -m pytest Phase_6/test_predict.py -q
+
+# part 2 - needs a live key in .env except where noted
+python Phase_7/secret_leak_check.py          # no API call, no key needed
+python Phase_7/memory_test.py                # fact present -> removed -> restored
+python Phase_7/security_review.py --diff-from HEAD~1   # interactive only
 ```
