@@ -1,0 +1,386 @@
+:root {
+  --ink: #17221f;
+  --muted: #65736d;
+  --paper: #f4f6f1;
+  --panel: #ffffff;
+  --line: #dce4dd;
+  --green: #1f6f57;
+  --coral: #d9624f;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+.app-shell {
+  min-height: 100vh;
+  padding: 44px clamp(20px, 5vw, 72px) 72px;
+  background: radial-gradient(circle at 90% 0%, #e5efe5 0, transparent 34%), var(--paper);
+}
+
+.app-header,
+.dashboard-grid {
+  width: min(1180px, 100%);
+  margin: 0 auto;
+}
+
+.app-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 36px;
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+  color: var(--green);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.app-header h1 {
+  margin: 0;
+  font-family: Georgia, serif;
+  font-size: clamp(2.2rem, 5vw, 4.2rem);
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+.header-copy {
+  margin: 12px 0 0;
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+
+.api-status,
+.data-note {
+  border: 1px solid #b8d3c3;
+  border-radius: 999px;
+  padding: 8px 12px;
+  color: var(--green);
+  background: #e8f3eb;
+  font-size: 0.8rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(320px, 0.65fr);
+  gap: 20px;
+}
+
+.overview-panel,
+#customer-search,
+#churn-prediction {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: clamp(22px, 3vw, 34px);
+  background: var(--panel);
+  box-shadow: 0 18px 45px rgba(38, 61, 50, 0.07);
+}
+
+.overview-panel {
+  grid-row: span 2;
+}
+
+.section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.section-heading h2,
+.section-heading h3,
+#customer-search h2,
+#churn-prediction h1 {
+  margin: 0;
+  font-family: Georgia, serif;
+  font-weight: 500;
+}
+
+.section-heading h2 {
+  font-size: 2rem;
+}
+
+.compact-heading {
+  margin-bottom: 22px;
+}
+
+.compact-heading h3 {
+  font-size: 1.3rem;
+}
+
+.compact-heading span {
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.metric-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 28px 0 34px;
+}
+
+.metric-card {
+  min-width: 0;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #f8faf7;
+}
+
+.metric-card span {
+  display: block;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.metric-card strong {
+  display: block;
+  margin-top: 10px;
+  font-size: 1.8rem;
+}
+
+.metric-card-alert strong {
+  color: var(--coral);
+}
+
+.contract-panel {
+  border-top: 1px solid var(--line);
+  padding-top: 28px;
+}
+
+.churn-bar-row {
+  grid-template-columns: 116px 1fr 48px;
+  gap: 12px;
+}
+
+.churn-bar-row span,
+.churn-bar-row strong {
+  font-size: 0.86rem;
+}
+
+.churn-bar-track {
+  height: 10px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #e8eee9;
+}
+
+.churn-bar {
+  border-radius: inherit;
+  background: var(--coral);
+}
+
+#customer-search h2,
+#churn-prediction h1 {
+  margin-bottom: 22px;
+  font-size: 1.7rem;
+}
+
+#customer-search > input {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+#customer-search input,
+#churn-prediction input,
+#churn-prediction select {
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  padding: 11px 12px;
+  color: var(--ink);
+  background: #fbfcfa;
+}
+
+#customer-search button,
+#churn-prediction button {
+  border: 0;
+  border-radius: 7px;
+  padding: 11px 16px;
+  color: white;
+  background: var(--green);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+#customer-search button:hover,
+#churn-prediction button:hover {
+  background: #185541;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+/*148.Show the churn field with colour coding: red background for churned, green for active*/
+.customer-card {
+  padding: 20px;
+  margin-top: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.churned {
+  padding: 10px;
+  background-color: #f8d7da;
+  color: #842029;
+}
+
+.active {
+  padding: 10px;
+  background-color: #d1e7dd;
+  color: #0f5132;
+}
+
+/* 152.Display three metric cards: total customers, total churned, churn rate (as a percentage) */
+.metric-cards {
+  display: flex;
+  gap: 16px;
+  margin: 20px 0;
+}
+
+.metric-card {
+  min-width: 180px;
+  padding: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f5f5f5;
+}
+
+.metric-card p {
+  margin: 8px 0 0;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* 153.Display a contract-type churn table: contract_type | churn_rate columns */
+.churn-table {
+  width: 100%;
+  max-width: 600px;
+  margin: 20px 0;
+  border-collapse: collapse;
+}
+
+.churn-table th,
+.churn-table td {
+  padding: 10px;
+  border: 1px solid #ccc;
+  text-align: left;
+}
+
+/* 155.Add a simple visual: for each contract type, show a coloured bar whose width is proportional to its churn rate */
+.churn-bars {
+  width: 100%;
+  max-width: 600px;
+}
+
+.churn-bar-row {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 12px;
+  align-items: center;
+  margin: 12px 0;
+}
+
+.churn-bar-track {
+  height: 18px;
+  background-color: #e9ecef;
+}
+
+.churn-bar {
+  height: 100%;
+  background-color: #dc3545;
+}
+
+/* 170.Add visual risk indicator: green for low risk (<0.3), amber for medium (0.3–0.6), red for high (>0.6) */
+#churn-prediction form {
+  display: grid;
+  gap: 12px;
+  max-width: 360px;
+}
+
+#churn-prediction label {
+  display: grid;
+  gap: 4px;
+}
+
+#churn-prediction input,
+#churn-prediction select,
+#churn-prediction button {
+  padding: 8px;
+  font-size: 16px;
+}
+
+.prediction-result {
+  max-width: 360px;
+  margin-top: 20px;
+  padding: 16px;
+  border-radius: 8px;
+}
+
+.risk-low {
+  background-color: #d1e7dd;
+  color: #0f5132;
+}
+
+.risk-medium {
+  background-color: #fff3cd;
+  color: #664d03;
+}
+
+.risk-high {
+  background-color: #f8d7da;
+  color: #842029;
+}
+
+.prediction-error {
+  color: #842029;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

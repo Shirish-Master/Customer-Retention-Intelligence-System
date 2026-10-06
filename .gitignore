@@ -9,9 +9,21 @@ __pycache__/
 .venv/
 venv/
 .pytest_cache/
+.mypy_cache/
+
+# Generated pipeline outputs
+/Phase_1/output/
+/Phase_5/data/logs/
+/Phase_5/data/spark_output/
+/Phase_5/test_parquet/
+*.parquet
+*.crc
+_SUCCESS
 
 # Node
 node_modules/
+/Phase_4/customer-dashboard/build/
+/Phase_4/customer-dashboard/coverage/
 
 # OS
 Thumbs.db
