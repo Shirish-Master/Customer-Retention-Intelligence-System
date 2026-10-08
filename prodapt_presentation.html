@@ -1,0 +1,1415 @@
+<title>Prodapt AI Operations Center - Capstone Presentation</title>
+<style>
+:root {
+  --primary-dark: #1a202c;
+  --primary-blue: #2563eb;
+  --accent-purple: #7c3aed;
+  --accent-teal: #0d9488;
+  --text-primary: #1f2937;
+  --text-secondary: #4b5563;
+  --text-light: #9ca3af;
+  --bg-white: #ffffff;
+  --bg-light: #f9fafb;
+  --bg-dark: #111827;
+  --border-color: #e5e7eb;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --error: #ef4444;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --text-primary: #f9fafb;
+    --text-secondary: #d1d5db;
+    --text-light: #9ca3af;
+    --bg-white: #1f2937;
+    --bg-light: #111827;
+    --bg-dark: #0f172a;
+    --border-color: #374151;
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --text-primary: #f9fafb;
+  --text-secondary: #d1d5db;
+  --text-light: #9ca3af;
+  --bg-white: #1f2937;
+  --bg-light: #111827;
+  --bg-dark: #0f172a;
+  --border-color: #374151;
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  background: var(--bg-dark);
+  color: var(--text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+}
+
+.presentation-wrapper {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-dark);
+}
+
+.slides-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  overflow: hidden;
+}
+
+.slide {
+  display: none;
+  width: 100%;
+  max-width: 1200px;
+  height: 100%;
+  max-height: 700px;
+  background: var(--bg-white);
+  border-radius: 16px;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+  padding: 60px 80px;
+  overflow-y: auto;
+  animation: slideIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.slide.active {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.slide::-webkit-scrollbar {
+  width: 8px;
+}
+
+.slide::-webkit-scrollbar-track {
+  background: var(--bg-light);
+}
+
+.slide::-webkit-scrollbar-thumb {
+  background: var(--primary-blue);
+  border-radius: 4px;
+}
+
+/* Slide Layout Variants */
+.slide-title-page {
+  background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-blue) 100%);
+  color: white;
+  text-align: center;
+  justify-content: center;
+  padding: 80px !important;
+}
+
+.slide-title-page h1 {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  letter-spacing: -1px;
+}
+
+.slide-title-page .subtitle {
+  font-size: 1.5rem;
+  opacity: 0.9;
+  margin-bottom: 60px;
+  font-weight: 300;
+}
+
+.slide-title-page .student-card {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 30px;
+  margin-top: 40px;
+  backdrop-filter: blur(10px);
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.slide-title-page .info-row {
+  font-size: 1.2rem;
+  margin: 15px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.slide-title-page .label {
+  font-weight: 600;
+  opacity: 0.8;
+}
+
+.slide-title-page .value {
+  font-weight: 700;
+  opacity: 1;
+  font-family: 'Courier New', monospace;
+}
+
+.slide h1 {
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: var(--primary-blue);
+  margin-bottom: 10px;
+  letter-spacing: -0.5px;
+}
+
+.slide h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--primary-blue);
+  margin-bottom: 10px;
+  border-bottom: 3px solid var(--accent-teal);
+  padding-bottom: 15px;
+}
+
+.slide h3 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-top: 28px;
+  margin-bottom: 16px;
+}
+
+.slide h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--primary-blue);
+  margin-top: 16px;
+  margin-bottom: 12px;
+}
+
+.slide p {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  margin: 12px 0;
+}
+
+.slide ul, .slide ol {
+  margin: 20px 0;
+  padding-left: 30px;
+  font-size: 1.05rem;
+}
+
+.slide li {
+  margin: 12px 0;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.slide li strong {
+  color: var(--text-primary);
+}
+
+/* Content Cards */
+.content-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px;
+  margin: 25px 0;
+}
+
+.content-card {
+  background: var(--bg-light);
+  border-left: 4px solid var(--primary-blue);
+  border-radius: 8px;
+  padding: 22px;
+}
+
+.content-card.accent {
+  border-left-color: var(--accent-purple);
+}
+
+.content-card.success {
+  border-left-color: var(--success);
+}
+
+.content-card.warning {
+  border-left-color: var(--warning);
+}
+
+.content-card h4 {
+  margin-top: 0;
+  color: var(--text-primary);
+  font-size: 1.15rem;
+  margin-bottom: 12px;
+}
+
+.content-card p {
+  margin: 10px 0;
+  font-size: 0.95rem;
+}
+
+/* Code/Technical Elements */
+.code-block {
+  background: var(--primary-dark);
+  color: #e0e7ff;
+  padding: 18px;
+  border-radius: 8px;
+  font-family: 'Monaco', 'Courier New', monospace;
+  font-size: 0.9rem;
+  overflow-x: auto;
+  margin: 16px 0;
+  line-height: 1.6;
+  border-left: 3px solid var(--accent-teal);
+}
+
+.code-block code {
+  color: #e0e7ff;
+}
+
+/* Tables */
+.styled-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 0.95rem;
+  background: var(--bg-white);
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+}
+
+.styled-table thead tr {
+  background: var(--primary-blue);
+  color: white;
+}
+
+.styled-table th {
+  padding: 14px;
+  text-align: left;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.styled-table td {
+  padding: 12px 14px;
+  border-top: 1px solid var(--border-color);
+  color: var(--text-secondary);
+}
+
+.styled-table tbody tr:hover {
+  background: var(--bg-light);
+}
+
+/* Badges */
+.badge {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin: 4px 6px 4px 0;
+}
+
+.badge-llama {
+  background: #ede9fe;
+  color: #6d28d9;
+}
+
+.badge-adk {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.badge-langgraph {
+  background: #dbeafe;
+  color: #0c4a6e;
+}
+
+.badge-crew {
+  background: #ffedd5;
+  color: #92400e;
+}
+
+.badge-streamlit {
+  background: #fce7f3;
+  color: #831843;
+}
+
+/* Architecture Diagram */
+.architecture-diagram {
+  background: var(--bg-light);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 24px;
+  margin: 20px 0;
+  font-family: 'Monaco', monospace;
+  font-size: 0.85rem;
+  overflow-x: auto;
+  line-height: 1.8;
+  color: var(--text-secondary);
+}
+
+.architecture-diagram .layer {
+  margin: 8px 0;
+  padding: 6px 12px;
+  background: var(--bg-white);
+  border-left: 3px solid var(--primary-blue);
+  border-radius: 4px;
+}
+
+/* Comparison */
+.comparison-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin: 20px 0;
+}
+
+.comparison-item {
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+
+.comparison-item.problem {
+  background: #fef2f2;
+  border-color: #fecaca;
+}
+
+.comparison-item.solution {
+  background: #ecfdf3;
+  border-color: #bbf7d0;
+}
+
+.comparison-item h4 {
+  margin-top: 0;
+  font-size: 1.1rem;
+  margin-bottom: 14px;
+}
+
+/* Scenario Box */
+.scenario-box {
+  background: #faf5ff;
+  border-left: 4px solid var(--accent-purple);
+  border-radius: 8px;
+  padding: 20px;
+  margin: 16px 0;
+}
+
+.scenario-box .scenario-label {
+  font-weight: 700;
+  color: var(--accent-purple);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.scenario-box .scenario-query {
+  font-family: 'Courier New', monospace;
+  font-size: 0.95rem;
+  background: var(--bg-white);
+  padding: 12px;
+  border-radius: 6px;
+  color: var(--primary-blue);
+  margin: 8px 0;
+}
+
+.scenario-box .scenario-route {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  margin-top: 10px;
+}
+
+/* Navigation */
+.nav-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  background: var(--bg-white);
+  border-top: 1px solid var(--border-color);
+  border-radius: 0 0 16px 16px;
+}
+
+.nav-controls {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.slide-counter {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 1rem;
+  min-width: 80px;
+  text-align: center;
+  font-family: 'Courier New', monospace;
+}
+
+.nav-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+button {
+  background: var(--primary-blue);
+  color: white;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background: var(--accent-purple);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(37, 99, 235, 0.3);
+}
+
+button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.dots {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--border-color);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.dot:hover {
+  transform: scale(1.2);
+  border-color: var(--primary-blue);
+}
+
+.dot.active {
+  background: var(--primary-blue);
+  transform: scale(1.3);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .slide {
+    padding: 40px 50px;
+  }
+
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .comparison-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .slide h2 {
+    font-size: 1.8rem;
+  }
+
+  .slide-title-page h1 {
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .slide {
+    padding: 30px 25px;
+    max-height: none;
+  }
+
+  .slide h1 {
+    font-size: 1.8rem;
+  }
+
+  .slide h2 {
+    font-size: 1.4rem;
+  }
+
+  .nav-bar {
+    padding: 15px 20px;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .nav-controls {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .slide-counter {
+    width: 100%;
+  }
+
+  .nav-buttons {
+    width: 100%;
+  }
+
+  .nav-buttons button {
+    flex: 1;
+  }
+}
+
+.two-column {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  margin: 20px 0;
+}
+
+.feature-list {
+  list-style: none;
+  padding: 0;
+}
+
+.feature-list li {
+  padding: 10px 0;
+  padding-left: 0;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: flex-start;
+}
+
+.feature-list li:last-child {
+  border-bottom: none;
+}
+
+.feature-list li:before {
+  content: "→";
+  color: var(--accent-teal);
+  font-weight: 700;
+  margin-right: 12px;
+  font-size: 1.1rem;
+}
+</style>
+
+<div class="presentation-wrapper">
+  <div class="slides-container">
+    <!-- SLIDE 1: Title Page -->
+    <div class="slide active slide-title-page">
+      <h1>Prodapt AI Operations Center</h1>
+      <p class="subtitle">Multi-Framework Agentic AI Architecture for Telecom Customer Support Automation</p>
+
+      <div class="student-card">
+        <div class="info-row">
+          <span class="label">Student Name</span>
+          <span class="value">Shirish Shyam Sundar Y</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Registration Number</span>
+          <span class="value">82590</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Project Type</span>
+          <span class="value">Capstone</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Date</span>
+          <span class="value">2026</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 2: Executive Summary -->
+    <div class="slide">
+      <h2>Executive Summary</h2>
+      <p style="margin-top: 20px; font-size: 1.1rem;">The Prodapt AI Operations Center is an intelligent multi-agent system designed to automate and orchestrate customer support operations for a mid-size telecom provider. This system integrates five complementary AI frameworks to create a seamless, policy-compliant, and data-driven customer service solution.</p>
+
+      <div class="content-grid" style="margin-top: 35px;">
+        <div class="content-card">
+          <h4>Problem Statement</h4>
+          <p>Current operations are fragmented across multiple systems with average handle times of 15-25 minutes for complex inquiries. Knowledge silos prevent consistent policy interpretation, and wrong-team routing causes customer frustration.</p>
+        </div>
+        <div class="content-card success">
+          <h4>Proposed Solution</h4>
+          <p>A unified AI orchestration platform that routes requests intelligently to specialized workers, leveraging LangGraph supervision, LlamaIndex retrieval, ADK agents, and CrewAI communication specialists.</p>
+        </div>
+      </div>
+
+      <h3>Key Capabilities</h3>
+      <ul style="columns: 2; column-gap: 40px;">
+        <li>Policy-grounded FAQ retrieval from document corpus</li>
+        <li>Semantic SQL generation for operational analytics</li>
+        <li>Real-time network diagnostics with tower data</li>
+        <li>Billing dispute resolution with audit trails</li>
+        <li>Professional customer communication generation</li>
+        <li>Fully traced agent execution for transparency</li>
+      </ul>
+    </div>
+
+    <!-- SLIDE 3: Business Context & Problem -->
+    <div class="slide">
+      <h2>Business Context & Challenges</h2>
+
+      <h3>The Organization</h3>
+      <p>Prodapt operates as a regional telecom provider offering mobile voice, 4G LTE, and 5G data services across the United States to consumer, business, and enterprise customer segments. The organization processes over 5,000 daily customer inquiries spanning network issues, billing disputes, roaming questions, SLA claims, and device upgrades.</p>
+
+      <h3>Current State Problems (As-Is)</h3>
+      <div class="comparison-grid">
+        <div class="comparison-item problem">
+          <h4>Operational Inefficiency</h4>
+          <ul style="font-size: 0.95rem; padding-left: 20px;">
+            <li>15-25 minute average handle time</li>
+            <li>Multiple team handoffs per inquiry</li>
+            <li>Manual context switching between tools</li>
+            <li>No automation of data lookups</li>
+          </ul>
+        </div>
+        <div class="comparison-item problem">
+          <h4>Quality & Consistency</h4>
+          <ul style="font-size: 0.95rem; padding-left: 20px;">
+            <li>Inconsistent policy interpretation</li>
+            <li>No single source of truth for FAQs</li>
+            <li>Tribal knowledge dependencies</li>
+            <li>No audit trail for decisions</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>Business Impact</h3>
+      <table class="styled-table">
+        <tr>
+          <td style="font-weight: 600; width: 40%;">Customer Satisfaction</td>
+          <td>Multiple transfers, long hold times create frustration</td>
+        </tr>
+        <tr>
+          <td style="font-weight: 600;">Operational Cost</td>
+          <td>High training requirements and inefficient resource utilization</td>
+        </tr>
+        <tr>
+          <td style="font-weight: 600;">Scalability</td>
+          <td>Linear scaling with headcount; unable to handle peak loads</td>
+        </tr>
+        <tr>
+          <td style="font-weight: 600;">Risk</td>
+          <td>Inconsistent compliance interpretation increases exposure</td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- SLIDE 4: Solution Architecture -->
+    <div class="slide">
+      <h2>Solution Architecture Overview</h2>
+
+      <p>The Prodapt AI Operations Center implements a multi-tier agent orchestration architecture where a LangGraph supervisor intelligently routes customer inquiries to specialized workers, each built on the most appropriate framework for that domain.</p>
+
+      <div class="architecture-diagram">
+        <div class="layer">
+          <strong>Interface Layer:</strong> Streamlit UI → Customer Query Input & Execution Trace Display
+        </div>
+        <div class="layer">
+          <strong>Orchestration Layer:</strong> LangGraph Supervisor with Structured Routing & State Management
+        </div>
+        <div class="layer">
+          <strong>Specialist Workers:</strong> PolicyRAG | NetworkAnalytics | NetworkDiagnosticsADK | BillingResolutionADK | CustomerCommsCrew
+        </div>
+        <div class="layer">
+          <strong>Retrieval Layer:</strong> LlamaIndex RAG (VectorStoreIndex) | LlamaIndex Semantic SQL (ObjectIndex)
+        </div>
+        <div class="layer">
+          <strong>Service Layer:</strong> Google ADK Agents (A2A Protocol) on Ports 8001 & 8002
+        </div>
+        <div class="layer">
+          <strong>Data Layer:</strong> SQLite Database (telecom_ops.db) with 9 core tables
+        </div>
+      </div>
+
+      <h3>Key Architectural Principles</h3>
+      <ul>
+        <li><strong>No In-Memory Data:</strong> All operational data (towers, outages, billing, incidents) persists in SQLite with no Python dictionaries</li>
+        <li><strong>Framework Specialization:</strong> Each framework handles exactly one domain for which it is optimized</li>
+        <li><strong>Remote A2A Services:</strong> ADK agents expose domain logic as independent HTTP microservices</li>
+        <li><strong>Transparent Orchestration:</strong> Every routing decision and tool call is captured in execution trace</li>
+        <li><strong>Policy Compliance:</strong> All answers grounded in provided policy documents or live database queries</li>
+      </ul>
+    </div>
+
+    <!-- SLIDE 5: Framework Integration -->
+    <div class="slide">
+      <h2>Framework Integration Strategy</h2>
+
+      <div class="content-grid">
+        <div class="content-card">
+          <h4>LlamaIndex</h4>
+          <p><strong>Role:</strong> Document retrieval and semantic SQL queries</p>
+          <p style="margin-top: 12px;"><strong>Components:</strong></p>
+          <ul style="font-size: 0.95rem;">
+            <li>VectorStoreIndex on 6 policy TXT files</li>
+            <li>ObjectIndex for table semantic matching</li>
+            <li>SQLTableRetrieverQueryEngine for SQL generation</li>
+          </ul>
+          <p style="margin-top: 10px; color: var(--text-light); font-size: 0.9rem;">Note: Not used for agents/workflows</p>
+        </div>
+        <div class="content-card accent">
+          <h4>Google ADK</h4>
+          <p><strong>Role:</strong> Domain-specific agent services</p>
+          <p style="margin-top: 12px;"><strong>Services:</strong></p>
+          <ul style="font-size: 0.95rem;">
+            <li>Network Diagnostics (Port 8001) with tower & performance tools</li>
+            <li>Billing Resolution (Port 8002) with lookup & credit tools</li>
+          </ul>
+          <p style="margin-top: 10px; color: var(--text-light); font-size: 0.9rem;">Exposed via A2A HTTP protocol</p>
+        </div>
+      </div>
+
+      <div class="content-grid">
+        <div class="content-card">
+          <h4>LangGraph</h4>
+          <p><strong>Role:</strong> Multi-agent orchestration and routing</p>
+          <p style="margin-top: 12px;"><strong>Features:</strong></p>
+          <ul style="font-size: 0.95rem;">
+            <li>Supervisor node with structured routing logic</li>
+            <li>Conditional edges to worker nodes</li>
+            <li>Accumulated agent_context across execution</li>
+          </ul>
+        </div>
+        <div class="content-card accent">
+          <h4>CrewAI</h4>
+          <p><strong>Role:</strong> Customer-ready response generation</p>
+          <p style="margin-top: 12px;"><strong>Crew Composition:</strong></p>
+          <ul style="font-size: 0.95rem;">
+            <li>Communications Specialist (draft)</li>
+            <li>Quality Reviewer (polish & verify)</li>
+          </ul>
+          <p style="margin-top: 10px; color: var(--text-light); font-size: 0.9rem;">Final step before response delivery</p>
+        </div>
+      </div>
+
+      <p style="margin-top: 25px; padding: 16px; background: #eff6ff; border-radius: 8px; border-left: 3px solid var(--primary-blue);">
+        <strong>Streamlit</strong> serves as the unified interface, providing query input, execution trace visualization, system status monitoring, and framework mapping documentation for end users.
+      </p>
+    </div>
+
+    <!-- SLIDE 6: Database Schema -->
+    <div class="slide">
+      <h2>Database Architecture & Schema</h2>
+
+      <p>All operational data is persisted in a normalized SQLite database following Prodapt's existing schema. No in-memory dictionaries or Python data structures store business data.</p>
+
+      <h3>Core Tables</h3>
+      <table class="styled-table" style="font-size: 0.9rem;">
+        <thead>
+          <tr>
+            <th>Table Name</th>
+            <th>Purpose</th>
+            <th>Used By</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>network_towers</strong></td>
+            <td>Tower inventory: region, city, technology (4G/5G), operational status</td>
+            <td>Network Diagnostics ADK, Semantic SQL</td>
+          </tr>
+          <tr>
+            <td><strong>tower_performance</strong></td>
+            <td>Performance metrics: latency, packet loss, throughput, signal strength, timestamp</td>
+            <td>Network Diagnostics ADK, Semantic SQL</td>
+          </tr>
+          <tr>
+            <td><strong>network_outages</strong></td>
+            <td>Historical outages: severity (CRITICAL/MAJOR/MINOR), duration, root cause, affected customers</td>
+            <td>Semantic SQL Analytics, Policy RAG cross-reference</td>
+          </tr>
+          <tr>
+            <td><strong>open_incidents</strong></td>
+            <td>Active NOC incidents linked to specific towers</td>
+            <td>Network Diagnostics ADK tools</td>
+          </tr>
+          <tr>
+            <td><strong>customer_subscriptions</strong></td>
+            <td>Active subscriptions: plan names, regional fees, account type</td>
+            <td>Semantic SQL Analytics</td>
+          </tr>
+          <tr>
+            <td><strong>billing_accounts</strong></td>
+            <td>Customer account state: current balance, account status</td>
+            <td>Billing Resolution ADK lookup_billing_account tool</td>
+          </tr>
+          <tr>
+            <td><strong>billing_charges</strong></td>
+            <td>Line items: amount, description, billing period, duplicate flag, invoice status (OPEN/PAID)</td>
+            <td>Billing Resolution ADK check_duplicate_charges tool</td>
+          </tr>
+          <tr>
+            <td><strong>billing_credits</strong></td>
+            <td>Applied or pending credits: amount, reason, status (APPLIED/PENDING_APPROVAL)</td>
+            <td>Billing Resolution ADK apply_billing_credit tool</td>
+          </tr>
+          <tr>
+            <td><strong>billing_disputes</strong></td>
+            <td>Dispute records: customer, charge, status (open/resolved), resolution</td>
+            <td>Billing Resolution ADK audit trail</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Data Flow Rules</h3>
+      <ul style="margin-top: 20px;">
+        <li><strong>Semantic SQL:</strong> Queries use only the most recent tower_performance sample (max recorded_at) per tower, not averages or historical data</li>
+        <li><strong>Billing Accounts:</strong> current_balance = sum of all billing_charges where invoice_status='OPEN' minus all billing_credits where status='APPLIED'</li>
+        <li><strong>Duplicate Detection:</strong> Same customer + same description + same billing period, OR is_duplicate_flag=1, OR cross-month plan repeats (not duplicates)</li>
+        <li><strong>Credit Limits:</strong> Credits ≤ $50 are auto-applied (APPLIED status); credits > $50 require approval (PENDING_APPROVAL status)</li>
+      </ul>
+    </div>
+
+    <!-- SLIDE 7: Scenario 1 - Policy FAQ -->
+    <div class="slide">
+      <h2>Scenario 1: Policy & FAQ Resolution</h2>
+
+      <div class="scenario-box">
+        <div class="scenario-label">Example Query</div>
+        <div class="scenario-query">What is Prodapt's roaming policy for Western Europe? I have an Unlimited Plus plan.</div>
+        <div class="scenario-route"><strong>Route:</strong> PolicyRAG → CustomerCommsCrew → FINISH</div>
+      </div>
+
+      <h3>Execution Flow</h3>
+      <ol>
+        <li><strong>Supervisor Analysis:</strong> Identifies policy/FAQ intent from keywords ("roaming policy", "Europe", "plan details")</li>
+        <li><strong>PolicyRAG Worker:</strong> Invokes LlamaIndex VectorStoreIndex on roaming_policy.txt document corpus</li>
+        <li><strong>Retrieval:</strong> Vector embeddings match question to relevant policy sections (Zones A-D definitions, Travel Pass rates, plan inclusions)</li>
+        <li><strong>Synthesis:</strong> Query engine generates natural language answer grounded in roaming_policy.txt source</li>
+        <li><strong>Agent Context Update:</strong> PolicyRAG output added to conversation state: "Zone B includes Western Europe. Travel Pass: $10/day with 5GB. Unlimited Plus does not include Zone B roaming..."</li>
+        <li><strong>CrewAI Communications:</strong> Specialist drafts empathetic, policy-compliant response with cost breakdowns and options</li>
+        <li><strong>Quality Review:</strong> Secondary agent verifies tone, accuracy, and compliance before delivery</li>
+        <li><strong>Execution Trace Entry:</strong> Step 1: PolicyRAG → [policy excerpt], Step 2: CustomerCommsCrew → [final response]</li>
+      </ol>
+
+      <h3>Framework Rationale</h3>
+      <p>LlamaIndex VectorStoreIndex excels at semantic document retrieval where the answer exists verbatim or can be synthesized from policy text. No SQL queries needed. RAG grounds answers in authoritative source documents, ensuring consistency and compliance.</p>
+    </div>
+
+    <!-- SLIDE 8: Scenario 2 - Network Analytics -->
+    <div class="slide">
+      <h2>Scenario 2: Network Analytics & Outage Trends</h2>
+
+      <div class="scenario-box">
+        <div class="scenario-label">Example Query</div>
+        <div class="scenario-query">Which region had the most CRITICAL network outages in the last 90 days? Can I get an SLA credit?</div>
+        <div class="scenario-route"><strong>Route:</strong> NetworkAnalytics → CustomerCommsCrew → FINISH</div>
+      </div>
+
+      <h3>Execution Flow</h3>
+      <ol>
+        <li><strong>Supervisor Analysis:</strong> Identifies analytics intent from keywords ("outage trends", "which region", "CRITICAL", "most")</li>
+        <li><strong>NetworkAnalytics Worker:</strong> Invokes LlamaIndex semantic SQL pipeline</li>
+        <li><strong>ObjectIndex Matching:</strong> Semantically matches question to network_outages table context string. ObjectIndex embedding finds best table match (network_outages vs tower_performance vs subscriptions)</li>
+        <li><strong>SQL Generation:</strong> SQLTableRetrieverQueryEngine generates: <code>SELECT region, COUNT(*) FROM network_outages WHERE severity='CRITICAL' GROUP BY region ORDER BY COUNT DESC LIMIT 1</code></li>
+        <li><strong>Query Execution:</strong> Result: "Midwest region: 47 CRITICAL outages (45% of total)"</li>
+        <li><strong>Answer Synthesis:</strong> LlamaIndex generates natural language: "The Midwest experienced the highest concentration of CRITICAL outages with 47 incidents..."</li>
+        <li><strong>CrewAI Communications:</strong> Specialist cross-references with SLA policy, determines customer eligibility for Business/Enterprise tiers, calculates credit amounts</li>
+        <li><strong>Execution Trace:</strong> Step 1: NetworkAnalytics → [region stats], Step 2: CustomerCommsCrew → [eligibility determination + credit calculation]</li>
+      </ol>
+
+      <h3>Framework Rationale</h3>
+      <p>LlamaIndex Semantic SQL automatically selects the correct table via vector embeddings without requiring users to write or understand SQL. SQLTableRetrieverQueryEngine handles the actual SQL generation and execution, making complex analytics accessible to non-technical staff.</p>
+    </div>
+
+    <!-- SLIDE 9: Scenario 3 - Network Diagnostics -->
+    <div class="slide">
+      <h2>Scenario 3: Network Diagnostics via ADK</h2>
+
+      <div class="scenario-box">
+        <div class="scenario-label">Example Query</div>
+        <div class="scenario-query">My 5G signal keeps dropping in Austin near tower TX-512. I get frequent disconnects. Please diagnose.</div>
+        <div class="scenario-route"><strong>Route:</strong> NetworkDiagnosticsADK → CustomerCommsCrew → FINISH</div>
+      </div>
+
+      <h3>Execution Flow</h3>
+      <ol>
+        <li><strong>Supervisor Analysis:</strong> Identifies network diagnostics intent from keywords ("signal drops", "tower ID", "diagnose", "5G")</li>
+        <li><strong>NetworkDiagnosticsADK Worker:</strong> LangGraph node invokes RemoteA2aAgent wrapper pointing to http://localhost:8001/.well-known/agent-card.json</li>
+        <li><strong>A2A HTTP Request:</strong> ADK runtime receives agent request via A2A protocol on port 8001</li>
+        <li><strong>ADK Tool Execution - check_tower_status(tower_id='TX-512'):</strong>
+          <ul style="font-size: 0.95rem;">
+            <li>Queries: <code>SELECT * FROM network_towers WHERE tower_id='TX-512'</code></li>
+            <li>Gets latest performance: <code>SELECT * FROM tower_performance WHERE tower_id='TX-512' ORDER BY recorded_at DESC LIMIT 1</code></li>
+            <li>Joins open incidents: <code>SELECT * FROM open_incidents WHERE tower_id='TX-512'</code></li>
+            <li>Returns: "Status: OPERATIONAL, Technology: 5G, Signal: -72 dBm, Packet Loss: 3.8%, Latency: 24ms, Open Incident: INC-8841"</li>
+          </ul>
+        </li>
+        <li><strong>ADK Tool Execution - run_connectivity_diagnostics(tower_id='TX-512', symptom='frequent disconnects'):</strong>
+          <ul style="font-size: 0.95rem;">
+            <li>Analyzes SQL data + incident history</li>
+            <li>Returns recommendations: "Packet loss within acceptable range. Incident INC-8841 reports fiber backhaul issues. Recommend NOC escalation."</li>
+          </ul>
+        </li>
+        <li><strong>Response Collection:</strong> RemoteA2aAgent wrapper returns combined diagnostic report to LangGraph node</li>
+        <li><strong>CrewAI Communications:</strong> Specialist transforms technical findings into empathetic customer message with next steps</li>
+      </ol>
+
+      <h3>Why ADK?</h3>
+      <p>Google ADK agents provide a structured agent framework with proper tool definition, streaming support, and the A2A protocol for remote service deployment. This allows Network Diagnostics to scale independently as a separate microservice.</p>
+    </div>
+
+    <!-- SLIDE 10: Scenario 4 - Billing Dispute -->
+    <div class="slide">
+      <h2>Scenario 4: Billing Dispute Resolution via ADK</h2>
+
+      <div class="scenario-box">
+        <div class="scenario-label">Example Query</div>
+        <div class="scenario-query">Customer CUST-10002 was charged twice for Unlimited Plus ($65.99 × 2). Investigate and apply credit.</div>
+        <div class="scenario-route"><strong>Route:</strong> BillingResolutionADK → CustomerCommsCrew → FINISH</div>
+      </div>
+
+      <h3>Execution Flow</h3>
+      <ol>
+        <li><strong>Supervisor Analysis:</strong> Identifies billing intent from "CUST-" prefix, "charged twice", "credit"</li>
+        <li><strong>BillingResolutionADK Worker:</strong> LangGraph node invokes RemoteA2aAgent on port 8002</li>
+        <li><strong>ADK Tool 1 - lookup_billing_account(customer_id='CUST-10002'):</strong>
+          <ul style="font-size: 0.95rem;">
+            <li>Query: <code>SELECT * FROM billing_accounts WHERE customer_id='CUST-10002'</code></li>
+            <li>Returns current balance: $131.98</li>
+            <li>Query charges: <code>SELECT * FROM billing_charges WHERE customer_id='CUST-10002' AND invoice_status='OPEN'</code></li>
+            <li>Returns: Two Unlimited Plus charges of $65.99 each (CHG-50021, CHG-50022)</li>
+          </ul>
+        </li>
+        <li><strong>ADK Tool 2 - check_duplicate_charges(customer_id='CUST-10002'):</strong>
+          <ul style="font-size: 0.95rem;">
+            <li>Detects: Same description ("Unlimited Plus"), same amount ($65.99), same billing period (September 2026)</li>
+            <li>Conclusion: Duplicate charge confirmed</li>
+            <li>Skips any charge already having APPLIED credit</li>
+          </ul>
+        </li>
+        <li><strong>ADK Tool 3 - apply_billing_credit(customer_id='CUST-10002', amount=65.99, reason='Duplicate Unlimited Plus charge'):</strong>
+          <ul style="font-size: 0.95rem;">
+            <li>Amount ($65.99) exceeds $50 auto-approval limit</li>
+            <li>INSERT into billing_credits: status='PENDING_APPROVAL' (awaits supervisor review)</li>
+            <li>current_balance remains $131.98 (no auto-deduction for pending credits)</li>
+            <li>Creates audit record with timestamp and reason</li>
+          </ul>
+        </li>
+        <li><strong>Response:</strong> "Duplicate charge verified. Credit of $65.99 submitted for approval. You will be notified when processed."</li>
+        <li><strong>CrewAI Communications:</strong> Specialist drafts professional billing letter with next steps and timeline</li>
+      </ol>
+
+      <h3>Key Business Rules</h3>
+      <table class="styled-table" style="font-size: 0.9rem; margin-top: 15px;">
+        <tr>
+          <td><strong>Credit Amount</strong></td>
+          <td><strong>Status</strong></td>
+          <td><strong>Balance Impact</strong></td>
+        </tr>
+        <tr>
+          <td>≤ $50.00</td>
+          <td>APPLIED</td>
+          <td>Immediately reduced</td>
+        </tr>
+        <tr>
+          <td>> $50.00</td>
+          <td>PENDING_APPROVAL</td>
+          <td>No change until approval</td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- SLIDE 11: Scenario 5 - Multi-Worker Flow -->
+    <div class="slide">
+      <h2>Scenario 5: Complex Multi-Worker Orchestration</h2>
+
+      <div class="scenario-box">
+        <div class="scenario-label">Example Query</div>
+        <div class="scenario-query">We experienced a 6-hour outage in the Midwest on September 12th. Multiple customers affected. Am I eligible for an SLA credit under Prodapt policy?</div>
+        <div class="scenario-route"><strong>Route:</strong> NetworkAnalytics → PolicyRAG → CustomerCommsCrew → FINISH</div>
+      </div>
+
+      <h3>Execution Flow</h3>
+      <ol>
+        <li><strong>Supervisor Analysis:</strong> Recognizes multi-domain question requiring both operational data AND policy interpretation</li>
+        <li><strong>First Worker - NetworkAnalytics:</strong>
+          <ul style="font-size: 0.95rem;">
+            <li>ObjectIndex matches to network_outages table</li>
+            <li>Generates: <code>SELECT * FROM network_outages WHERE region='Midwest' AND duration_hours >= 6 AND date='2026-09-12'</code></li>
+            <li>Result: "OUT-2026-0912: CRITICAL outage, 6 hours, 8,500 customers affected, fiber backhaul cut"</li>
+            <li>Agent context update: Operational facts captured</li>
+          </ul>
+        </li>
+        <li><strong>Supervisor Re-evaluation:</strong> Now has outage facts; routes to PolicyRAG for eligibility determination</li>
+        <li><strong>Second Worker - PolicyRAG:</strong>
+          <ul style="font-size: 0.95rem;">
+            <li>VectorStoreIndex queries sla_policy.txt</li>
+            <li>Retrieves: "Business Unlimited (6+ hours): $22.50/month credit. Enterprise Mobile (6+ hours): $62.25/month. Consumer: No credit."</li>
+            <li>Agent context update: Policy eligibility rules added</li>
+          </ul>
+        </li>
+        <li><strong>Supervisor Decision:</strong> Both operational data and policy rules gathered; route to CrewAI for synthesis</li>
+        <li><strong>CrewAI Communications:</strong>
+          <ul style="font-size: 0.95rem;">
+            <li>Specialist receives full agent_context: outage facts + policy rules</li>
+            <li>Drafts: "Your account qualifies for SLA credit. Business Unlimited customers receive $22.50 for the 6-hour Midwest outage. Credit will be applied within 2 business days."</li>
+            <li>Reviewer verifies accuracy of dollar amounts, eligibility, and compliance</li>
+          </ul>
+        </li>
+        <li><strong>Execution Trace:</strong> Shows 3 steps in order: NetworkAnalytics → PolicyRAG → CustomerCommsCrew</li>
+      </ol>
+
+      <h3>Supervisor Routing Matrix</h3>
+      <table class="styled-table" style="font-size: 0.9rem;">
+        <tr>
+          <td><strong>Question Type</strong></td>
+          <td><strong>Keywords</strong></td>
+          <td><strong>First Worker</strong></td>
+          <td><strong>Then Route To</strong></td>
+        </tr>
+        <tr>
+          <td>Pure Policy</td>
+          <td>policy, roaming, FAQ, rules, costs</td>
+          <td>PolicyRAG</td>
+          <td>CrewAI → FINISH</td>
+        </tr>
+        <tr>
+          <td>Analytics</td>
+          <td>trends, which region, top N, count</td>
+          <td>NetworkAnalytics</td>
+          <td>CrewAI → FINISH</td>
+        </tr>
+        <tr>
+          <td>Diagnostics</td>
+          <td>signal drops, tower ID, diagnose</td>
+          <td>NetworkDiagnosticsADK</td>
+          <td>CrewAI → FINISH</td>
+        </tr>
+        <tr>
+          <td>Billing</td>
+          <td>charged twice, credit, CUST-</td>
+          <td>BillingResolutionADK</td>
+          <td>CrewAI → FINISH</td>
+        </tr>
+        <tr>
+          <td>Multi-Domain</td>
+          <td>outage + policy, billing + analytics</td>
+          <td>Data/ADK worker</td>
+          <td>Other worker(s) → CrewAI → FINISH</td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- SLIDE 12: LangGraph Supervisor Design -->
+    <div class="slide">
+      <h2>LangGraph Supervisor Architecture</h2>
+
+      <h3>State Definition (AgentState)</h3>
+      <div class="code-block">
+<code>class AgentState(TypedDict):
+  messages: Annotated[list, add_messages]  # Conversation history
+  next: str                                  # Supervisor routing decision
+  user_query: str                           # Original customer inquiry
+  agent_context: str                        # Accumulated worker outputs
+  execution_trace: list[dict]              # Step-by-step trace</code>
+      </div>
+
+      <h3>Graph Structure</h3>
+      <ul style="margin-top: 20px;">
+        <li><strong>Start Node:</strong> Receives user query, initializes state</li>
+        <li><strong>Supervisor Node:</strong> LLM with structured output determines next worker (PolicyRAG | NetworkAnalytics | NetworkDiagnosticsADK | BillingResolutionADK | CustomerCommsCrew | FINISH)</li>
+        <li><strong>Worker Nodes (5 total):</strong>
+          <ul style="margin-top: 10px; padding-left: 20px;">
+            <li>PolicyRAG: Calls document_rag.py, updates agent_context</li>
+            <li>NetworkAnalytics: Calls sql_semantic_search.py, updates agent_context</li>
+            <li>NetworkDiagnosticsADK: Calls RemoteA2aAgent wrapper, updates agent_context</li>
+            <li>BillingResolutionADK: Calls RemoteA2aAgent wrapper, updates agent_context</li>
+            <li>CustomerCommsCrew: Calls CrewAI crew with full agent_context, produces final_response</li>
+          </ul>
+        </li>
+        <li><strong>Conditional Routing:</strong> Supervisor output routes to appropriate worker node or END</li>
+        <li><strong>Loop Back:</strong> Each worker returns to supervisor (except CustomerCommsCrew, which triggers END)</li>
+      </ul>
+
+      <h3>Execution Trace Mechanism</h3>
+      <p>Each worker node appends to execution_trace list after producing output:</p>
+      <div class="code-block" style="font-size: 0.85rem;">
+<code>execution_trace.append({
+  "worker": "PolicyRAG",
+  "output": "Zone B includes Western Europe..."
+})</code>
+      </div>
+      <p>CrewAI final response is marked as the last trace entry before delivery to UI.</p>
+    </div>
+
+    <!-- SLIDE 13: Streamlit UI & UX -->
+    <div class="slide">
+      <h2>Streamlit User Interface Design</h2>
+
+      <h3>Main Content Area</h3>
+      <ul>
+        <li><strong>Header:</strong> "Prodapt AI Operations Center" with brief framework explanation</li>
+        <li><strong>Query Input:</strong> Multi-line text area with placeholder text inviting plain English inquiry</li>
+        <li><strong>Submit Button:</strong> Invokes graph entry function, shows spinner during execution</li>
+        <li><strong>Final Response Box:</strong> Displays CrewAI-polished customer-ready response prominently in success/info box</li>
+        <li><strong>Agent Execution Trace:</strong> Expandable panel (expanded by default) showing worker execution order with truncated outputs</li>
+      </ul>
+
+      <h3>Sidebar - System Status & Monitoring</h3>
+      <div class="two-column" style="margin: 20px 0;">
+        <div>
+          <h4 style="color: var(--text-primary);">Status Indicators</h4>
+          <ul style="font-size: 0.95rem;">
+            <li>✓ Database status (telecom_ops.db exists?)</li>
+            <li>✓ Vector index status (ready?)</li>
+            <li>✓ Network ADK service (port 8001 alive?)</li>
+            <li>✓ Billing ADK service (port 8002 alive?)</li>
+          </ul>
+        </div>
+        <div>
+          <h4 style="color: var(--text-primary);">Framework Map</h4>
+          <ul style="font-size: 0.95rem;">
+            <li>Policy FAQ → LlamaIndex RAG</li>
+            <li>Analytics → Semantic SQL</li>
+            <li>Diagnostics → ADK A2A</li>
+            <li>Billing → ADK A2A</li>
+            <li>Orchestration → LangGraph</li>
+            <li>Communication → CrewAI</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>Execution Trace Display (Required)</h3>
+      <p>The trace is mandatory for evaluation and must show:</p>
+      <table class="styled-table" style="font-size: 0.9rem;">
+        <tr>
+          <td><strong>Step #</strong></td>
+          <td>Sequential number (1, 2, 3, ...)</td>
+        </tr>
+        <tr>
+          <td><strong>Worker Name</strong></td>
+          <td>Exact LangGraph node name (PolicyRAG, BillingResolutionADK, etc.)</td>
+        </tr>
+        <tr>
+          <td><strong>Worker Output</strong></td>
+          <td>Truncated text from agent_context (first 500 chars for readability)</td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- SLIDE 14: Implementation Roadmap -->
+    <div class="slide">
+      <h2>Implementation Roadmap & Setup</h2>
+
+      <h3>Phase 1: Foundation (Days 1-2)</h3>
+      <ol>
+        <li>Create Python venv and install requirements: langgraph, langchain-openai, llama-index, google-adk[a2a], crewai, streamlit, sentence-transformers</li>
+        <li>Configure .env file with OPENAI_API_KEY</li>
+        <li>Initialize SQLite database: Run 01_schema.sql then 02_seed_data.sql against data/telecom_ops.db</li>
+        <li>Verify database integrity: Check table row counts, verify billing duplicate for CUST-10002</li>
+      </ol>
+
+      <h3>Phase 2: Retrieval & Analytics (Days 3-5)</h3>
+      <ol>
+        <li>Implement document_rag.py: Load policy TXT files, build VectorStoreIndex, persist to data/vector_index/</li>
+        <li>Implement sql_semantic_search.py: Create ObjectIndex on table schemas, build SQLTableRetrieverQueryEngine</li>
+        <li>Test both modules independently with sample queries</li>
+      </ol>
+
+      <h3>Phase 3: ADK Services (Days 6-8)</h3>
+      <ol>
+        <li>Build Network Diagnostics ADK agent on port 8001 with SQL-backed tools</li>
+        <li>Build Billing Resolution ADK agent on port 8002 with credit logic</li>
+        <li>Verify A2A agent cards are published and accessible</li>
+      </ol>
+
+      <h3>Phase 4: Orchestration (Days 9-10)</h3>
+      <ol>
+        <li>Implement state.py with AgentState definition</li>
+        <li>Implement graph.py with supervisor node and all worker nodes</li>
+        <li>Implement adk_remote_client.py with RemoteA2aAgent wrappers</li>
+        <li>Implement crew_nodes.py with CrewAI communications crew</li>
+      </ol>
+
+      <h3>Phase 5: UI & Testing (Days 11-12)</h3>
+      <ol>
+        <li>Implement ui/app.py with Streamlit interface</li>
+        <li>Add sidebar system status checks and framework map</li>
+        <li>Implement execution trace display with worker names and outputs</li>
+        <li>End-to-end testing of all 5 scenarios</li>
+      </ol>
+    </div>
+
+    <!-- SLIDE 15: Evaluation Criteria -->
+    <div class="slide">
+      <h2>Evaluation Criteria & Rubric</h2>
+
+      <h3>Grading Breakdown</h3>
+      <table class="styled-table">
+        <tr>
+          <td><strong>Criterion</strong></td>
+          <td><strong>Weight</strong></td>
+          <td><strong>Assessment Approach</strong></td>
+        </tr>
+        <tr>
+          <td>Correct framework selection per scenario</td>
+          <td>30%</td>
+          <td>Verify PolicyRAG for policies, Semantic SQL for analytics, ADK for diagnostics/billing, CrewAI for comms</td>
+        </tr>
+        <tr>
+          <td>LangGraph supervisor logic</td>
+          <td>20%</td>
+          <td>Structured routing works; worker loop functions; agent_context accumulates; FINISH after CrewAI</td>
+        </tr>
+        <tr>
+          <td>LlamaIndex RAG & semantic SQL</td>
+          <td>20%</td>
+          <td>VectorStoreIndex loads docs; ObjectIndex selects tables; no LlamaIndex agents used</td>
+        </tr>
+        <tr>
+          <td>ADK A2A implementation</td>
+          <td>20%</td>
+          <td>Two services run on ports 8001/8002; RemoteA2aAgent invokes them; all tools query SQLite not dicts</td>
+        </tr>
+        <tr>
+          <td>Streamlit UX & execution trace</td>
+          <td>10%</td>
+          <td>Clean interface; sidebar status; prominent trace with worker names, output; no errors on submit</td>
+        </tr>
+      </table>
+
+      <h3>Demo Requirements (15 Minutes)</h3>
+      <ol style="margin-top: 20px;">
+        <li>Explain business use case and system architecture</li>
+        <li>Show populated database with sample data (especially CUST-10002 duplicate)</li>
+        <li>Start both ADK services; verify agent cards in browser</li>
+        <li>Execute Scenario 1 (Policy) - show PolicyRAG in trace</li>
+        <li>Execute Scenario 2 (Analytics) - verify semantic table matching</li>
+        <li>Execute Scenario 3 (Diagnostics) - confirm SQL queries run live</li>
+        <li>Execute Scenario 4 (Billing) - show PENDING_APPROVAL credit logic</li>
+        <li>Display execution trace - verify worker order and output truncation</li>
+        <li>Highlight CrewAI response vs raw specialist output</li>
+      </ol>
+    </div>
+
+    <!-- SLIDE 16: Summary & Key Takeaways -->
+    <div class="slide">
+      <h2>Project Summary & Key Achievements</h2>
+
+      <h3>Technical Accomplishments</h3>
+      <div class="content-grid">
+        <div class="content-card success">
+          <h4>Multi-Framework Integration</h4>
+          <p>Five complementary frameworks working in concert: LlamaIndex for retrieval, ADK for specialized services, LangGraph for orchestration, CrewAI for communication, Streamlit for interface.</p>
+        </div>
+        <div class="content-card success">
+          <h4>Data-Driven Architecture</h4>
+          <p>All operational data persists in SQLite with no in-memory dictionaries. Database queries are the source of truth, enabling audit trails and regulatory compliance.</p>
+        </div>
+      </div>
+
+      <div class="content-grid">
+        <div class="content-card success">
+          <h4>Microservice Separation</h4>
+          <p>ADK agents run as independent HTTP services, enabling Network and Billing teams to deploy and update specialists independently without core system changes.</p>
+        </div>
+        <div class="content-card success">
+          <h4>Transparent Orchestration</h4>
+          <p>Every routing decision and tool invocation captured in execution trace, providing full visibility into agent reasoning and enabling compliance audits.</p>
+        </div>
+      </div>
+
+      <h3>Business Value</h3>
+      <ul style="margin-top: 25px;">
+        <li><strong>Reduced Handle Time:</strong> From 15-25 minutes to 2-5 minutes through automation</li>
+        <li><strong>Consistency:</strong> All answers grounded in policy documents or live database queries</li>
+        <li><strong>Scalability:</strong> Specialist services scale independently; no monolithic bottleneck</li>
+        <li><strong>Compliance:</strong> Complete audit trail for regulatory review and dispute resolution</li>
+        <li><strong>Staff Empowerment:</strong> Reduces training burden; staff focus on exceptions, not data lookups</li>
+      </ul>
+
+      <p style="margin-top: 35px; padding: 20px; background: #eff6ff; border-radius: 8px; border-left: 4px solid var(--primary-blue); font-size: 1.05rem;">
+        <strong>Conclusion:</strong> The Prodapt AI Operations Center demonstrates how careful framework selection and orchestration design can transform customer support from a manual, fragmented process into an automated, policy-compliant, and scalable system.
+      </p>
+    </div>
+  </div>
+
+  <!-- Navigation Bar -->
+  <div class="nav-bar">
+    <div class="nav-controls">
+      <div class="nav-buttons">
+        <button id="prevBtn" onclick="changeSlide(-1)">← Previous</button>
+        <button id="nextBtn" onclick="changeSlide(1)">Next →</button>
+      </div>
+      <div class="slide-counter">
+        <span id="currentSlide">1</span> / <span id="totalSlides">16</span>
+      </div>
+      <div class="dots" id="dotsContainer"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+let currentSlide = 1;
+const totalSlides = document.querySelectorAll('.slide').length;
+
+document.getElementById('totalSlides').textContent = totalSlides;
+
+const dotsContainer = document.getElementById('dotsContainer');
+for (let i = 1; i <= totalSlides; i++) {
+  const dot = document.createElement('div');
+  dot.className = 'dot';
+  if (i === 1) dot.classList.add('active');
+  dot.onclick = () => goToSlide(i);
+  dotsContainer.appendChild(dot);
+}
+
+function showSlide(n) {
+  const slides = document.querySelectorAll('.slide');
+  const dots = document.querySelectorAll('.dot');
+
+  if (n > totalSlides) currentSlide = totalSlides;
+  if (n < 1) currentSlide = 1;
+
+  slides.forEach(slide => slide.classList.remove('active'));
+  dots.forEach(dot => dot.classList.remove('active'));
+
+  slides[currentSlide - 1].classList.add('active');
+  dots[currentSlide - 1].classList.add('active');
+
+  document.getElementById('currentSlide').textContent = currentSlide;
+  document.getElementById('prevBtn').disabled = currentSlide === 1;
+  document.getElementById('nextBtn').disabled = currentSlide === totalSlides;
+}
+
+function changeSlide(n) {
+  currentSlide += n;
+  showSlide(currentSlide);
+}
+
+function goToSlide(n) {
+  currentSlide = n;
+  showSlide(currentSlide);
+}
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowLeft') changeSlide(-1);
+  if (e.key === 'ArrowRight') changeSlide(1);
+});
+
+showSlide(currentSlide);
+</script>
